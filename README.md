@@ -1,6 +1,6 @@
 # Proyecto_DSA441_SubiteSV
 
-_Creación de una aplicación _
+
 
 ## Herramientas
 
