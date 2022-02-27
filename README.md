@@ -4,8 +4,7 @@ _Creación de una aplicación _
 
 ## Herramientas
 
-* [Android Studio] https://developer.android.com/studio?hl=es-419&gclid=Cj0KCQjwppSEBhCGARIsANIs4p4EyyCZX7TunXEly893f1rdPBxQZQxE0e-v119AxRyg1cffFvvUY2EaAjJsEALw_wcB&gclsrc=aw.ds - 
-* Necesario para configurar un emulador de android para realizar pruebas.
+* [Android Studio] https://developer.android.com/studio?hl=es-419&gclid=Cj0KCQjwppSEBhCGARIsANIs4p4EyyCZX7TunXEly893f1rdPBxQZQxE0e-v119AxRyg1cffFvvUY2EaAjJsEALw_wcB&gclsrc=aw.ds --Necesario para configurar un emulador de android para realizar pruebas.
 * [Firebase] https://firebase.google.com/ - Para el almacenamiento de datos.
 * [Trello] https://trello.com/es - Planificación de las actividades del equipo de desarrollo.
 * [Git hub] https://github.com/ - Control de versiones del software.
