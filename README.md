@@ -14,9 +14,9 @@ _Creación de una aplicación _
 
 ## Miembros del equipo de desarrollo DSA441 -Proyecto SubiteSV
 
-* **Patrick Ernesto Rosales Mendoza** - **Encargado de la programación y lógica de la aplicación**
-* **Kevin Adonay Martínez Cerón** - **Encargado del diseño de la aplicación**
-* **Stanley Adonay Mejia Amaya** - **Encargado del manejo de la base de datos**
+* **Patrick Ernesto Rosales Mendoza**
+* **Kevin Adonay Martínez Cerón** 
+* **Stanley Adonay Mejia Amaya** 
 
 
 
