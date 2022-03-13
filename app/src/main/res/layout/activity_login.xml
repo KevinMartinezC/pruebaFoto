@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".Login">
 
-
+<include layout="@layout/barra_toolbar"></include>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

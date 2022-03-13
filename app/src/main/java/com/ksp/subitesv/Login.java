@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,7 +21,7 @@ public class Login extends AppCompatActivity {
 
     TextInputEditText TxtCorreo, TxtContrasena;
     Button BtnIniciarSesion;
-
+    Toolbar bToolBar;
     FirebaseAuth mAuth;
     DatabaseReference mBasedeDatos;
 
@@ -28,6 +29,10 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        bToolBar = findViewById(R.id.toolbar);
+        setSupportActionBar(bToolBar);
+        getSupportActionBar().setTitle("Login");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TxtContrasena = findViewById(R.id.TxtContrasena);
         TxtCorreo = findViewById(R.id.TxtCorreo);
