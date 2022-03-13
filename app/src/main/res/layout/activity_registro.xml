@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:text="REGISTRAR"
                 android:background="@drawable/rounded_button"
-                android:backgroundTint="@color/colorPrimary"
+                app:backgroundTint="@color/anaranjado"
                 android:layout_margin="30dp"
                 android:textColor="@color/white" />
 
