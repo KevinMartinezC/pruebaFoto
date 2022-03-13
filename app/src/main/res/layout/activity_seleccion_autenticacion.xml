@@ -34,6 +34,7 @@
             android:textStyle="bold"/>
 
         <Button
+            android:id="@+id/btnIrInicioSeccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -44,6 +45,7 @@
             android:layout_marginRight="30dp"/>
 
         <Button
+            android:id="@+id/btnIraRegistrarse"
             android:layout_width="match_parent"
             android:background="@drawable/rounded_button"
             app:backgroundTint="@color/white"
