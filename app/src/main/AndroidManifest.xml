@@ -16,7 +16,7 @@
             android:exported="false" />
         <activity
             android:name=".Login"
-            android:exported="false" />
+            android:parentActivityName=".SeleccionAutenticacion" />
         <activity
             android:name=".Registro"
             android:exported="false" />
