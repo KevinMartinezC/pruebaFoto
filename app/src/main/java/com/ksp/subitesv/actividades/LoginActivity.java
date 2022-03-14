@@ -1,4 +1,4 @@
-package com.ksp.subitesv;
+package com.ksp.subitesv.actividades;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,12 +15,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.ksp.subitesv.R;
+import com.ksp.subitesv.includes.AppToolBar;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     TextInputEditText TxtCorreo, TxtContrasena;
     Button BtnIniciarSesion;
-    Toolbar bToolBar;
     FirebaseAuth mAuth;
     DatabaseReference mBasedeDatos;
 
@@ -29,10 +29,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        bToolBar = findViewById(R.id.toolbar);
-        setSupportActionBar(bToolBar);
-        getSupportActionBar().setTitle("Login");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        AppToolBar.mostrar(this, "Iniciar Sesion", true);
 
         TxtContrasena = findViewById(R.id.TxtContrasena);
         TxtCorreo = findViewById(R.id.TxtCorreo);
@@ -61,9 +58,9 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {//Login fue realizado Con exito
-                            Toast.makeText(Login.this, getText(R.string.InicioSeccionExitoso), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, getText(R.string.InicioSeccionExitoso), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(Login.this, getText(R.string.CorreoContraInvalidos), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, getText(R.string.CorreoContraInvalidos), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

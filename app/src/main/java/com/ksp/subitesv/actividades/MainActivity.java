@@ -1,4 +1,4 @@
-package com.ksp.subitesv;
+package com.ksp.subitesv.actividades;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ksp.subitesv.R;
 
 public class MainActivity extends AppCompatActivity {
     Button btnCliente;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void irSeleccionAutenticacion() {
-        Intent intent = new Intent(this, SeleccionAutenticacion.class);
+        Intent intent = new Intent(this, SeleccionAutenticacionActivity.class);
         startActivity(intent);
     }
 }

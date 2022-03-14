@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ksp.subitesv">
-    <uses-permission android:name="android.permission.INTERNET"/> //agregando permiso para internet
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,22 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SubiteSV">
-
         <activity
-            android:name=".MainActivity"
+            android:name=".actividades.conductor.RegistroConductorActivity"
             android:exported="false" />
         <activity
-            android:name=".Login"
-            android:parentActivityName=".SeleccionAutenticacion" />
-        <activity
-            android:name=".Registro"
+            android:name=".actividades.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SeleccionAutenticacion"
+            android:name=".actividades.LoginActivity"
+            android:parentActivityName=".actividades.SeleccionAutenticacionActivity" />
+        <activity
+            android:name=".actividades.cliente.RegistroActivity"
+            android:parentActivityName=".actividades.SeleccionAutenticacionActivity" />
+        <activity
+            android:name=".actividades.SeleccionAutenticacionActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".actividades.MainActivity" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".actividades.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

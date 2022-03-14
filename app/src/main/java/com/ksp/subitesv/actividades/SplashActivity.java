@@ -1,9 +1,11 @@
-package com.ksp.subitesv;
+package com.ksp.subitesv.actividades;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.ksp.subitesv.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
