@@ -91,7 +91,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/icon_car" />
+                android:src="@drawable/ic_car" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package com.ksp.subitesv.actividades.conductor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -93,7 +94,10 @@ public class RegistroConductorActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(RegistroConductorActivity.this, "El registro se realizo exitosamente", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(RegistroConductorActivity.this, MapaConductorActivity.class);
+                    intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    //Toast.makeText(RegistroConductorActivity.this, "El registro se realizo exitosamente", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(RegistroConductorActivity.this, "No se pudo crear el usuario", Toast.LENGTH_SHORT).show();
                 }

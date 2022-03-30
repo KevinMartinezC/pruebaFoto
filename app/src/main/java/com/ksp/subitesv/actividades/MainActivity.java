@@ -8,7 +8,10 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.ksp.subitesv.R;
+import com.ksp.subitesv.actividades.cliente.MapClienteActivity;
+import com.ksp.subitesv.actividades.conductor.MapaConductorActivity;
 
 public class MainActivity extends AppCompatActivity {
     Button btnCliente;
@@ -45,6 +48,25 @@ public class MainActivity extends AppCompatActivity {
                 irSeleccionAutenticacion();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            String tipoUsuario = mPref.getString("usuario", "");
+            if (tipoUsuario.equals("cliente")){
+                Intent intent=new Intent(MainActivity.this, MapClienteActivity.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+            else {
+                Intent intent=new Intent(MainActivity.this, MapaConductorActivity.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        }
     }
 
     private void irSeleccionAutenticacion() {
