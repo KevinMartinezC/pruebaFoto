@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Login">
+    tools:context=".actividades.LoginActivity">
 
-
+<include layout="@layout/barra_toolbar"></include>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/icon_uber_clone"
+            android:src="@drawable/uber_logo"
             android:layout_marginTop="100dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"/>
@@ -42,6 +42,7 @@
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/TxtCorreo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Correo electronico"
@@ -72,6 +73,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/TxtContrasena"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Contraseña"
@@ -89,6 +91,7 @@
             android:gravity="bottom">
 
             <Button
+                android:id="@+id/BtnIniciarSesion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="INGRESAR"

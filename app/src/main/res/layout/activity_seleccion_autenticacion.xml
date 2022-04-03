@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/colorPrimary"
-    tools:context=".SeleccionAutenticacion">
+    tools:context=".actividades.SeleccionAutenticacionActivity">
 
     <include layout="@layout/barra_toolbar"></include>
 
@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/icon_uber_clone"
+            android:src="@drawable/uber_logo"
             android:layout_marginTop="50dp"
             android:layout_gravity="center"/>
 
@@ -34,16 +34,18 @@
             android:textStyle="bold"/>
 
         <Button
+            android:id="@+id/btnIrInicioSeccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/rounded_button"
             android:text="YA TENGO CUENTA"
-            app:backgroundTint="@color/anaranjado"
             android:textColor="@color/white"
-            android:layout_marginRight="30dp"/>
+            app:backgroundTint="@color/anaranjado" />
 
         <Button
+            android:id="@+id/btnIraRegistrarse"
             android:layout_width="match_parent"
             android:background="@drawable/rounded_button"
             app:backgroundTint="@color/white"
