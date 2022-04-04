@@ -6,7 +6,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -24,7 +23,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ksp.subitesv.R;
 import com.ksp.subitesv.actividades.MainActivity;
-import com.ksp.subitesv.actividades.cliente.MapClienteActivity;
 import com.ksp.subitesv.includes.AppToolBar;
 import com.ksp.subitesv.proveedores.AuthProveedores;
 import com.ksp.subitesv.proveedores.ProveedorGeoFire;
@@ -106,7 +104,7 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
 
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
 
-        SupportMapFragment mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapa);
         mMapFragment.getMapAsync(this);
 
         mButtonConectar = findViewById(R.id.btn_Conectar);

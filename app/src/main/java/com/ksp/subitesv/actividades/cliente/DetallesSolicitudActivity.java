@@ -33,61 +33,62 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetallesSolicitudActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private GoogleMap mMap;
+    private GoogleMap mMapa;
     private SupportMapFragment mMapFragment;
 
-    private double mExtraOriginLat;
-    private double mExtraOriginLng;
-    private double mExtraDestinationLat;
-    private double mExtraDestinationLng;
+    private double mExtraOrigenLat;
+    private double mExtraOrigenLng;
+    private double mExtraDestinoLat;
+    private double mExtraDestinoLng;
 
-    private LatLng mOriginLatLng;
-    private LatLng mDestinationLatLng;
 
-    private GoogleApiProveedor mGoogleApiProvider;
-    private List<LatLng> mPolylineList;
-    private PolylineOptions mPolylineOptions;
+    private LatLng mOrigenLatLng;
+    private LatLng mDestinoLatLng;
 
-    private TextView mTextViewOrigin;
-    private TextView mTextViewDestination;
-    private TextView mTextViewTime;
-    private TextView mTextViewDistance;
+    private GoogleApiProveedor mGoogleApiProveedor;
+    private List<LatLng> mPolylineLista;
+    private PolylineOptions mPolylineOpciones;
 
-    private String mExtraOrigin;
-    private String mExtraDestination;
+    private TextView mTextViewOrigen;
+    private TextView mTextViewDestino;
+    private TextView mTextViewTiempo;
+    private TextView mTextViewDistancia;
+
+    private String mExtraOrigen;
+    private String mExtraDestino;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_solicitud);
         AppToolBar.mostrar(this, "TUS DATOS", true);
 
-        mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapa);
         mMapFragment.getMapAsync(this);
 
-        mExtraOriginLat = getIntent().getDoubleExtra("origin_lat", 0);
-        mExtraOriginLng = getIntent().getDoubleExtra("origin_lng", 0);
-        mExtraDestinationLat = getIntent().getDoubleExtra("destination_lat", 0);
-        mExtraDestinationLng = getIntent().getDoubleExtra("destination_lng", 0);
-        mExtraOrigin = getIntent().getStringExtra("origin");
-        mExtraDestination = getIntent().getStringExtra("destination");
+        mExtraOrigenLat = getIntent().getDoubleExtra("origin_lat", 0);
+        mExtraOrigenLng = getIntent().getDoubleExtra("origin_lng", 0);
+        mExtraDestinoLat = getIntent().getDoubleExtra("destination_lat", 0);
+        mExtraDestinoLng = getIntent().getDoubleExtra("destination_lng", 0);
+        mExtraOrigen = getIntent().getStringExtra("origin");
+        mExtraDestino = getIntent().getStringExtra("destination");
 
-        mOriginLatLng = new LatLng(mExtraOriginLat, mExtraOriginLng);
-        mDestinationLatLng = new LatLng(mExtraDestinationLat, mExtraDestinationLng);
+        mOrigenLatLng = new LatLng(mExtraOrigenLat, mExtraOrigenLng);
+        mDestinoLatLng = new LatLng(mExtraDestinoLat, mExtraDestinoLng);
 
 
-        mGoogleApiProvider = new GoogleApiProveedor(DetallesSolicitudActivity.this);
+        mGoogleApiProveedor = new GoogleApiProveedor(DetallesSolicitudActivity.this);
 
-        mTextViewOrigin = findViewById(R.id.textViewOrigin);
-        mTextViewDestination = findViewById(R.id.textViewDestination);
-        mTextViewTime = findViewById(R.id.textViewTime);
-        mTextViewDistance = findViewById(R.id.textViewDistance);
+        mTextViewOrigen = findViewById(R.id.textViewOrigen);
+        mTextViewDestino = findViewById(R.id.textViewDestino);
+        mTextViewTiempo = findViewById(R.id.textViewTiempo);
+        mTextViewDistancia = findViewById(R.id.textViewDistancia);
 
-        mTextViewOrigin.setText(mExtraOrigin);
-        mTextViewDestination.setText(mExtraDestination);
+        mTextViewOrigen.setText(mExtraOrigen);
+        mTextViewDestino.setText(mExtraDestino);
     }
 
     private void drawRoute() {
-        mGoogleApiProvider.getDirections(mOriginLatLng, mDestinationLatLng).enqueue(new Callback<String>() {
+        mGoogleApiProveedor.getDirections(mOrigenLatLng, mDestinoLatLng).enqueue(new Callback<String>() {
 
 
             @Override
@@ -99,14 +100,14 @@ public class DetallesSolicitudActivity extends AppCompatActivity implements OnMa
                     JSONObject route = jsonArray.getJSONObject(0);
                     JSONObject polylines = route.getJSONObject("overview_polyline");
                     String points = polylines.getString("points");
-                    mPolylineList = DecodificadorPuntos.decodePoly(points);
-                    mPolylineOptions = new PolylineOptions();
-                    mPolylineOptions.color(Color.DKGRAY);
-                    mPolylineOptions.width(8f);
-                    mPolylineOptions.startCap(new SquareCap());
-                    mPolylineOptions.jointType(JointType.ROUND);
-                    mPolylineOptions.addAll(mPolylineList);
-                    mMap.addPolyline(mPolylineOptions);
+                    mPolylineLista = DecodificadorPuntos.decodePoly(points);
+                    mPolylineOpciones = new PolylineOptions();
+                    mPolylineOpciones.color(Color.DKGRAY);
+                    mPolylineOpciones.width(8f);
+                    mPolylineOpciones.startCap(new SquareCap());
+                    mPolylineOpciones.jointType(JointType.ROUND);
+                    mPolylineOpciones.addAll(mPolylineLista);
+                    mMapa.addPolyline(mPolylineOpciones);
 
                     JSONArray legs =  route.getJSONArray("legs");
                     JSONObject leg = legs.getJSONObject(0);
@@ -114,8 +115,8 @@ public class DetallesSolicitudActivity extends AppCompatActivity implements OnMa
                     JSONObject duration = leg.getJSONObject("duration");
                     String distanceText = distance.getString("text");
                     String durationText = duration.getString("text");
-                    mTextViewTime.setText(durationText);
-                    mTextViewDistance.setText(distanceText);
+                    mTextViewTiempo.setText(durationText);
+                    mTextViewDistancia.setText(distanceText);
 
                 } catch(Exception e) {
                     Log.d("Error", "Error encontrado " + e.getMessage());
@@ -130,16 +131,16 @@ public class DetallesSolicitudActivity extends AppCompatActivity implements OnMa
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMapa = googleMap;
+        mMapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMapa.getUiSettings().setZoomControlsEnabled(true);
 
-        mMap.addMarker(new MarkerOptions().position(mOriginLatLng).title("Origen").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_pin_red)));
-        mMap.addMarker(new MarkerOptions().position(mDestinationLatLng).title("Destino").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_pin_blue)));
+        mMapa.addMarker(new MarkerOptions().position(mOrigenLatLng).title("Origen").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_pin_red)));
+        mMapa.addMarker(new MarkerOptions().position(mDestinoLatLng).title("Destino").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_pin_blue)));
 
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+        mMapa.animateCamera(CameraUpdateFactory.newCameraPosition(
                 new CameraPosition.Builder()
-                        .target(mOriginLatLng)
+                        .target(mOrigenLatLng)
                         .zoom(14f)
                         .build()
         ));
