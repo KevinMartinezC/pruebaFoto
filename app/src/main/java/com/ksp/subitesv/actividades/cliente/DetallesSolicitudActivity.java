@@ -87,7 +87,7 @@ public class DetallesSolicitudActivity extends AppCompatActivity implements OnMa
         mTextViewDestino.setText(mExtraDestino);
     }
 
-    private void drawRoute() {
+    private void DibujarRuta() {
         mGoogleApiProveedor.getDirections(mOrigenLatLng, mDestinoLatLng).enqueue(new Callback<String>() {
 
 
@@ -145,7 +145,7 @@ public class DetallesSolicitudActivity extends AppCompatActivity implements OnMa
                         .build()
         ));
 
-        drawRoute();
+        DibujarRuta();
     }
 
 

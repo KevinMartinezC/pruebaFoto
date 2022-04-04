@@ -125,7 +125,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
                     if (mPrimeraVez) {
                         mPrimeraVez = false;
                         obtenerConductoresActivos();
-                        limitSearch();
+                        LimitarBusqueda();
                     }
                 }
             }
@@ -152,19 +152,19 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
             Places.initialize(getApplicationContext(), getResources().getString(R.string.google_maps_key));
         }
         mPlaces = Places.createClient(this);
-        instanceAutocompleteOrigin();
-        instanceAutocompleteDestination();
+        instanciarAutocompletarOrigen();
+        instanciarAutocompletarDestino();
         onCameraMove();
         mBotonSolicitarConductor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestDriver();
+                SolicitarConductor();
             }
         });
 
     }
 
-    private void requestDriver() {
+    private void SolicitarConductor() {
 
         if (mOrigenLatLng != null && mDestinoLatLng != null) {
             Intent intent = new Intent(MapClienteActivity.this, DetallesSolicitudActivity.class);
@@ -181,7 +181,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
         }
 
     }
-    private void limitSearch() {
+    private void LimitarBusqueda() {
         LatLng northSide = SphericalUtil.computeOffset(mLatLngActual, 5000, 0);
         LatLng southSide = SphericalUtil.computeOffset(mLatLngActual, 5000, 180);
         mAutocompletar.setCountry("SV");
@@ -209,7 +209,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
         };
     }
 
-    private void instanceAutocompleteOrigin() {
+    private void instanciarAutocompletarOrigen() {
         mAutocompletar = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.AutocompletarOrigen);
         mAutocompletar.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME));
         mAutocompletar.setHint("Lugar de recogida");
@@ -230,7 +230,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
         });
     }
 
-    private void instanceAutocompleteDestination() {
+    private void instanciarAutocompletarDestino() {
         mAutocompletarDestino = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.AutocompletarDestino);
         mAutocompletarDestino.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME));
         mAutocompletarDestino.setHint("Destino");
@@ -351,10 +351,10 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
                     }
 
                 } else {
-                    checkLocationPermissions();
+                    RevisarPermisosUbicacion();
                 }
             } else {
-                checkLocationPermissions();
+                RevisarPermisosUbicacion();
             }
         }
 
@@ -412,7 +412,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
                 }
             }
             else {
-                checkLocationPermissions();
+                RevisarPermisosUbicacion();
             }
         }else {
             if (gpsActive()){
@@ -426,7 +426,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
-    private void checkLocationPermissions(){
+    private void RevisarPermisosUbicacion(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!=  PackageManager.PERMISSION_GRANTED){
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
                 new AlertDialog.Builder(this)
