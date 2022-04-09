@@ -4,6 +4,7 @@ package com.ksp.subitesv.actividades.cliente;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,6 +70,8 @@ public class SolicitarConductorActivity extends AppCompatActivity {
     private ReservaClienteProveedor mReservaClienteProveedor;
     private AuthProveedores mAuthProveedores;
     private GoogleApiProveedor mGoogleApiProvider;
+
+    private  ValueEventListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,9 +225,10 @@ public class SolicitarConductorActivity extends AppCompatActivity {
 
                                     );
                                     mReservaClienteProveedor.crear(reservaCliente).addOnSuccessListener(new OnSuccessListener<Void>() {
+
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            Toast.makeText(SolicitarConductorActivity.this, "La peticion se creo correctamente", Toast.LENGTH_SHORT).show();
+                                            revisarEstadoReservaCliente();
                                         }
                                     });
                                     //Toast.makeText(SolicitarConductorActivity.this, R.string.notificacionEnviada, Toast.LENGTH_SHORT).show();
@@ -257,4 +261,41 @@ public class SolicitarConductorActivity extends AppCompatActivity {
 
     }
 
+    private void revisarEstadoReservaCliente() {
+       mListener = mReservaClienteProveedor.obtenerStado(mAuthProveedores.obetenerId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String estado = snapshot.getValue().toString();
+                    if(estado.equals("accept")){
+                        Intent intent = new Intent(SolicitarConductorActivity.this, MapReservaClienteActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if(estado.equals("cancel")){
+                        Toast.makeText(SolicitarConductorActivity.this, R.string.viajeNoAceptado, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SolicitarConductorActivity.this, MapClienteActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(mListener != null){
+            mReservaClienteProveedor.obtenerStado(mAuthProveedores.obetenerId()).removeEventListener(mListener);
+        }
+
+
+    }
 }

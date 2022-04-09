@@ -23,5 +23,9 @@ public class ReservaClienteProveedor {
         map.put("estado", estado);
         return  mBasedeDatos.child(idReservaCliente).updateChildren(map);
     }
+    public DatabaseReference obtenerStado(String idReservaCliente){
+        return  mBasedeDatos.child(idReservaCliente).child("estado");
+    }
+
 
 }

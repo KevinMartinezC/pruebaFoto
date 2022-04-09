@@ -10,6 +10,7 @@
     <string name="notificacionNOEnviada">No se pudo enviar la notificacion</string>
     <string name="noseEncontroConductor">NO SE ENCONTRO UN CONDUCTOR</string>
     <string name="nosePudoenviarNotificacionConductorNotieneToken">NO se pudo enviar la notificacion porque el conductor no tiene un token de inicio de sesion</string>
+    <string name="viajeNoAceptado">El conductor no acepto el viaje</string>
 
 
 </resources>
