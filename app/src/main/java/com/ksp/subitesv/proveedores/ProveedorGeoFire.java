@@ -12,8 +12,8 @@ public class ProveedorGeoFire {
     private DatabaseReference mDatabase;
     private GeoFire mGeoFire;
 
-    public ProveedorGeoFire() {
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("conductores_activos");
+    public ProveedorGeoFire(String referencia) {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(referencia);
         mGeoFire = new GeoFire(mDatabase);
     }
 
@@ -31,5 +31,9 @@ public class ProveedorGeoFire {
         geoQuery.removeAllListeners();
         return geoQuery;
     }
+    public DatabaseReference isConductorTrabajando(String idConductor){
+        return FirebaseDatabase.getInstance().getReference().child("conductores_trabajando").child(idConductor);
+    }
+
 
 }

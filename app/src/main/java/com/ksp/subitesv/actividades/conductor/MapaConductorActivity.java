@@ -22,6 +22,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.ksp.subitesv.R;
 import com.ksp.subitesv.actividades.MainActivity;
 import com.ksp.subitesv.actividades.cliente.MapClienteActivity;
@@ -65,6 +68,7 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
 
     private boolean misConnect = false;
     private LatLng mLatLngActual;
+    private ValueEventListener mListener;
 
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
@@ -104,7 +108,7 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
 
         AppToolBar.mostrar(this, "Conductor", false);
         mAuthProveedores = new AuthProveedores();
-        mProveedorGeofire = new ProveedorGeoFire();
+        mProveedorGeofire = new ProveedorGeoFire("conductores_activos");
         mTokenProveedor = new TokenProveedor();
 
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
@@ -121,6 +125,31 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
                 } else {
                     startLocation();
                 }
+            }
+        });
+        isConductorTrabajando();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mListener!=null){
+            mProveedorGeofire.isConductorTrabajando(mAuthProveedores.obetenerId()).removeEventListener(mListener);
+        }
+    }
+
+    private void isConductorTrabajando() {
+       mListener = mProveedorGeofire.isConductorTrabajando(mAuthProveedores.obetenerId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    disconnect();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

@@ -94,7 +94,7 @@ public class SolicitarConductorActivity extends AppCompatActivity {
 
         mOriginLatLng = new LatLng(mExtraOriginLat,mExtraOriginLng);
         mDestinationLatLng = new LatLng(mExtraDestinationLat,mExtraDestinationLng);
-        mGeofireProvider = new ProveedorGeoFire();
+        mGeofireProvider = new ProveedorGeoFire("conductores_activos");
         mNotificacionProveedor = new NotificacionProveedor();
         mTokenProveedor = new TokenProveedor();
         mReservaClienteProveedor = new ReservaClienteProveedor();
