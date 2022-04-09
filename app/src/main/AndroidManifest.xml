@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SubiteSV">
 
+        <receiver android:name=".receptores.AceptarReceptores"
+            android:enabled="true"/>
+        <receiver android:name=".receptores.CancelarReceptor"
+            android:enabled="true"/>
+
         <service android:name=".services.MensajeriaClienteFirebase"
             android:exported="false">
             <intent-filter>
