@@ -1,5 +1,6 @@
 package com.ksp.subitesv.proveedores;
 
+
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -25,8 +26,8 @@ public class ProveedorGeoFire {
         mGeoFire.removeLocation(idConductor);
     }
 
-    public GeoQuery obtenerConductoresActivos(LatLng latLng){
-        GeoQuery geoQuery = mGeoFire.queryAtLocation(new GeoLocation(latLng.latitude, latLng.longitude), 5);
+    public GeoQuery obtenerConductoresActivos(LatLng latLng, double radius){
+        GeoQuery geoQuery = mGeoFire.queryAtLocation(new GeoLocation(latLng.latitude, latLng.longitude), radius);
         geoQuery.removeAllListeners();
         return geoQuery;
     }
