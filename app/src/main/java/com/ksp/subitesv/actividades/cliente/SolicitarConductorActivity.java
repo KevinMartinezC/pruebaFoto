@@ -195,7 +195,12 @@ public class SolicitarConductorActivity extends AppCompatActivity {
                     String token = snapshot.child("token").getValue().toString();
                     Map<String, String> map = new HashMap<>();
                     map.put("title","SOLICITUD DE SERVICIO A " + tiempo + " DE TU POSICION");
-                    map.put("body","Un cliente esta solicitando un servicio a una distancia de " + km);
+                    map.put("body",
+                            "Un cliente esta solicitando un servicio a una distancia de " + km + "\n" +
+                                    "Recoger en: " + mExtraOrigin + "\n" +
+                                    "Destino: " + mExtraDestination
+                    );
+                    map.put("idCliente", mAuthProveedores.obetenerId());
                     FCMCuerpo fcmCuerpo = new FCMCuerpo(token, "high",map);
                     mNotificacionProveedor.enviarNotificacion(fcmCuerpo).enqueue(new Callback<FCMRespuesta>() {
                         @Override

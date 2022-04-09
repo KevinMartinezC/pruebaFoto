@@ -61,7 +61,19 @@ public class NotificacionHelper extends ContextWrapper {
                 .setAutoCancel(true)
                 .setSound(sonioUri)
                 .setContentIntent(intent)
-                .setSmallIcon(R.drawable.ic_car);
+                .setSmallIcon(R.drawable.ic_car)
+                .setStyle(new Notification.BigTextStyle().bigText(body).setBigContentTitle(title));
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Notification.Builder obtenerNotificacionAcciones(String title, String body, Uri sonioUri,Notification.Action aceptarAccion) {
+        return new Notification.Builder(getApplicationContext(), CANAL_ID)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setAutoCancel(true)
+                .setSound(sonioUri)
+                .setSmallIcon(R.drawable.ic_car)
+                .addAction(aceptarAccion)
+                .setStyle(new Notification.BigTextStyle().bigText(body).setBigContentTitle(title));
     }
 
     public NotificationCompat.Builder obtenerNotificacionOldAPI(String title, String body, PendingIntent intent, Uri sonioUri) {
@@ -71,6 +83,17 @@ public class NotificacionHelper extends ContextWrapper {
                 .setAutoCancel(true)
                 .setSound(sonioUri)
                 .setContentIntent(intent)
-                .setSmallIcon(R.drawable.ic_car);
+                .setSmallIcon(R.drawable.ic_car)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body).setBigContentTitle(title));
+    }
+    public NotificationCompat.Builder obtenerNotificacionOldAPIAccciones(String title, String body,  Uri sonioUri, NotificationCompat.Action aceptarAccion) {
+        return new NotificationCompat.Builder(getApplicationContext(), CANAL_ID)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setAutoCancel(true)
+                .setSound(sonioUri)
+                .setSmallIcon(R.drawable.ic_car)
+                .addAction(aceptarAccion)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body).setBigContentTitle(title));
     }
 }
