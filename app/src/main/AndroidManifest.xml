@@ -12,13 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SubiteSV">
+        <activity
+            android:name=".actividades.conductor.MapReservaConductorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".actividades.cliente.MapReservaClienteActivity"
+            android:exported="false" />
 
-        <service android:name=".services.MensajeriaClienteFirebase"
+        <receiver
+            android:name=".receptores.AceptarReceptores"
+            android:enabled="true" />
+        <receiver
+            android:name=".receptores.CancelarReceptor"
+            android:enabled="true" />
+
+        <service
+            android:name=".services.MensajeriaClienteFirebase"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".actividades.cliente.SolicitarConductorActivity"
             android:exported="false" />

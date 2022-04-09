@@ -6,32 +6,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-import com.ksp.subitesv.R;
-import com.ksp.subitesv.actividades.MainActivity;
-import com.ksp.subitesv.actividades.cliente.MapClienteActivity;
-import com.ksp.subitesv.includes.AppToolBar;
-import com.ksp.subitesv.proveedores.AuthProveedores;
-import com.ksp.subitesv.proveedores.ProveedorGeoFire;
-import com.ksp.subitesv.proveedores.TokenProveedor;
 
 import android.Manifest;
 import android.content.Context;
@@ -44,14 +18,30 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.ksp.subitesv.R;
+import com.ksp.subitesv.proveedores.AuthProveedores;
+import com.ksp.subitesv.proveedores.ProveedorGeoFire;
+import com.ksp.subitesv.proveedores.TokenProveedor;
 
-public class MapaConductorActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapReservaConductorActivity extends AppCompatActivity implements OnMapReadyCallback {
+
 
     private GoogleMap mMap;
     private AuthProveedores mAuthProveedores;
@@ -64,11 +54,8 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
     private final static int SETTINGS_REQUEST_CODE = 2;
 
     private Marker mMarker;
-    private Button mButtonConectar;
 
-    private boolean misConnect = false;
     private LatLng mLatLngActual;
-    private ValueEventListener mListener;
 
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
@@ -104,56 +91,17 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mapa_conductor);
+        setContentView(R.layout.activity_map_reserva_conductor);
 
-        AppToolBar.mostrar(this, "Conductor", false);
         mAuthProveedores = new AuthProveedores();
-        mProveedorGeofire = new ProveedorGeoFire("conductores_activos");
+        mProveedorGeofire = new ProveedorGeoFire("conductores_trabajando");
         mTokenProveedor = new TokenProveedor();
 
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
 
         SupportMapFragment mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mMapFragment.getMapAsync(this);
-        generarToken();
-        mButtonConectar = findViewById(R.id.btn_Conectar);
-        mButtonConectar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (misConnect) {
-                    disconnect();
-                } else {
-                    startLocation();
-                }
-            }
-        });
-        isConductorTrabajando();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mListener!=null){
-            mProveedorGeofire.isConductorTrabajando(mAuthProveedores.obetenerId()).removeEventListener(mListener);
-        }
-    }
-
-    private void isConductorTrabajando() {
-       mListener = mProveedorGeofire.isConductorTrabajando(mAuthProveedores.obetenerId()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    disconnect();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
 
     private void actualizarUbicacion() {
         if (mAuthProveedores.sesionExistente() && mLatLngActual != null) {
@@ -176,6 +124,7 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setSmallestDisplacement(5);
+        startLocation();
 
     }
 
@@ -244,8 +193,7 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
     private void disconnect() {
 
         if (mFusedLocation != null) {
-            mButtonConectar.setText("Conectarse");
-            misConnect = false;
+
             mFusedLocation.removeLocationUpdates(mLocationCallback);
             if (mAuthProveedores.sesionExistente()) {
                 mProveedorGeofire.removerUbicacion(mAuthProveedores.obetenerId());
@@ -260,8 +208,6 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 if (gpsActive()) {
-                    mButtonConectar.setText("Desconectarse");
-                    misConnect = true;
                     mFusedLocation.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
                     mMap.setMyLocationEnabled(true);
                 } else {
@@ -290,43 +236,17 @@ public class MapaConductorActivity extends AppCompatActivity implements OnMapRea
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                ActivityCompat.requestPermissions(MapaConductorActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                                ActivityCompat.requestPermissions(MapReservaConductorActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
                             }
                         })
                         .create()
                         .show();
             } else {
-                ActivityCompat.requestPermissions(MapaConductorActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(MapReservaConductorActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
 
             }
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.conductor_menu, menu);
 
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_cerrarSesion) {
-            cerrarSesion();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    void cerrarSesion() {
-        disconnect();
-        mAuthProveedores.cerrarSesion();
-        Intent intent = new Intent(MapaConductorActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    void generarToken() {
-        mTokenProveedor.crear(mAuthProveedores.obetenerId());
-    }
 }

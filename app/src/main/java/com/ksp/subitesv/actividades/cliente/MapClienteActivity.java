@@ -142,7 +142,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
 
         AppToolBar.mostrar(this, "Cliente", false);
         mAuthProveedores = new AuthProveedores();
-        mProveedorGeofire = new ProveedorGeoFire();
+        mProveedorGeofire = new ProveedorGeoFire("conductores_activos");
         mTokenProveedor = new TokenProveedor();
 
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);

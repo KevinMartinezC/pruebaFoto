@@ -4,7 +4,7 @@ package com.ksp.subitesv.modulos;
 import java.util.ArrayList;
 
 public class FCMRespuesta{
-    private float multicast_id;
+    private long multicast_id;
     private int success;
     private int failure;
     private int canonical_ids;
@@ -14,7 +14,9 @@ public class FCMRespuesta{
 // Getter Methods
 
 
-    public FCMRespuesta(float multicast_id, int success, int failure, int canonical_ids, ArrayList<Object> results) {
+
+
+    public FCMRespuesta(long multicast_id, int success, int failure, int canonical_ids, ArrayList<Object> results) {
         this.multicast_id = multicast_id;
         this.success = success;
         this.failure = failure;
@@ -22,11 +24,11 @@ public class FCMRespuesta{
         this.results = results;
     }
 
-    public float getMulticast_id() {
+    public long getMulticast_id() {
         return multicast_id;
     }
 
-    public void setMulticast_id(float multicast_id) {
+    public void setMulticast_id(long multicast_id) {
         this.multicast_id = multicast_id;
     }
 
