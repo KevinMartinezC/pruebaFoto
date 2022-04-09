@@ -17,5 +17,21 @@ public class AuthProveedores {
         return   mAuth.signInWithEmailAndPassword(correo, contrasena);
     }
 
+    public void cerrarSesion(){
+        mAuth.signOut();
+    }
+
+    public String obetenerId(){
+        return mAuth.getUid();
+    }
+
+    public boolean sesionExistente(){
+        boolean Existe=false;
+        if (mAuth.getCurrentUser() != null){
+            Existe=true;
+        }
+        return Existe;
+    }
+
 
 }

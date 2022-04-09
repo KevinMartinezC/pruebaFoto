@@ -6,5 +6,7 @@
     <string name="ContrasenaMayora6Digitos">La contraseña debe tener más de 6 caracteres</string>
     <string name="IngreseTodoslosCampos">Debe completar todos los campos, para poder registrarse</string>
     <string name="NosePudoRegistrar">No se pudo registrar el usuario, revise los datos ingresados</string>
+    <string name="notificacionEnviada">La notificacion se ha enviado correctamente</string>
+    <string name="notificacionNOEnviada">No se pudo enviar la notificacion</string>
 
 </resources>
