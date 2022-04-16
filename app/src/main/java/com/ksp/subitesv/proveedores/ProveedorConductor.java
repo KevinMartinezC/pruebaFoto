@@ -13,7 +13,12 @@ public class ProveedorConductor {
     public ProveedorConductor() {
         mBasedeDatos = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Conductores");
     }
-    public Task<Void> crear(Conductor conductor){
-        return  mBasedeDatos.child(conductor.getId()).setValue(conductor);
+
+    public Task<Void> crear(Conductor conductor) {
+        return mBasedeDatos.child(conductor.getId()).setValue(conductor);
+    }
+
+    public DatabaseReference obtenerConductor(String conductorId){
+        return mBasedeDatos.child(conductorId);
     }
 }

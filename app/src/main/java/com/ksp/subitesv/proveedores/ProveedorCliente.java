@@ -20,4 +20,8 @@ public class ProveedorCliente {
         map.put("correo",cliente.getCorreo());
         return  mBasedeDatos.child(cliente.getId()).setValue(map);
     }
+
+    public DatabaseReference obtenerCLiente(String clienteId) {
+        return mBasedeDatos.child(clienteId);
+    }
 }
