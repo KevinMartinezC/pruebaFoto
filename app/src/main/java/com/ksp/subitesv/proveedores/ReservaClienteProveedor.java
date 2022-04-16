@@ -40,4 +40,7 @@ public class ReservaClienteProveedor {
         return  mBasedeDatos.child(idReservaCliente);
     }
 
+    public Task<Void> eliminar(String idReservaCliente) {
+        return mBasedeDatos.child(idReservaCliente).removeValue();
+    }
 }

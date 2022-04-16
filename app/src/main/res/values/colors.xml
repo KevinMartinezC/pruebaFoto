@@ -11,4 +11,6 @@
     <color name="colorPrimarioDark">#512DA8</color>
     <color name="colorAccent">#E040FB</color>
     <color name="anaranjado">#E47529</color>
+    <color name="rojo">#F11803</color>
+    <color name="azul_claro">#39A4F6</color>
 </resources>

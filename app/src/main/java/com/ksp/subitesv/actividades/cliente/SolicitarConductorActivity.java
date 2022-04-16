@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +51,7 @@ public class SolicitarConductorActivity extends AppCompatActivity {
 
     private LottieAnimationView mAnimation;
     private TextView mTextviewLookingFor;
-    private Button mButtonCalcelRequest;
+    private Button mButtonCancelRequest;
     private ProveedorGeoFire mGeofireProvider;
 
     private String mExtraOrigin;
@@ -80,7 +81,7 @@ public class SolicitarConductorActivity extends AppCompatActivity {
 
         mAnimation = findViewById(R.id.animacion);
         mTextviewLookingFor = findViewById(R.id.textViewLookingFor);
-        mButtonCalcelRequest = findViewById(R.id.btnCancelRequest);
+        mButtonCancelRequest = findViewById(R.id.btnCancelRequest);
 
         mAnimation.playAnimation();
         mExtraOriginLat = getIntent().getDoubleExtra("origin_lat",0);
@@ -100,8 +101,27 @@ public class SolicitarConductorActivity extends AppCompatActivity {
         mReservaClienteProveedor = new ReservaClienteProveedor();
         mAuthProveedores = new AuthProveedores();
         mGoogleApiProvider = new GoogleApiProveedor(SolicitarConductorActivity.this);
+
+
+        mButtonCancelRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelarSolicitud();
+            }
+        });
+
+
         getClosestDriver();
 
+
+    }
+    private void cancelarSolicitud(){
+        mReservaClienteProveedor.eliminar(mAuthProveedores.obetenerId()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                enviarNotificacionCancelar();
+            }
+        });
 
     }
     private void getClosestDriver(){
@@ -189,7 +209,56 @@ public class SolicitarConductorActivity extends AppCompatActivity {
 
     }
 
+private void enviarNotificacionCancelar(){
+    mTokenProveedor.obtenerToken(mIdDriverFound).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {//contiene la informacion que esta dentro del nodo del id del usuario
+            if(snapshot.exists()){
+                String token = snapshot.child("token").getValue().toString();
+                Map<String, String> map = new HashMap<>();
+                map.put("title","VIAJE CANCELADO");
+                map.put("body",
+                        "El cliente cancelo la solicitud"
+                );
 
+                FCMCuerpo fcmCuerpo = new FCMCuerpo(token, "high","4500s",map);
+                mNotificacionProveedor.enviarNotificacion(fcmCuerpo).enqueue(new Callback<FCMRespuesta>() {
+                    @Override
+                    public void onResponse(Call<FCMRespuesta> call, Response<FCMRespuesta> response) {
+                        if(response.body() != null){
+                            if(response.body().getSuccess() == 1){
+                                Toast.makeText(SolicitarConductorActivity.this, "La solicitud se cancelo correctamente", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SolicitarConductorActivity.this,MapClienteActivity.class);
+                            startActivity(intent);
+                            finish();
+                            //Toast.makeText(SolicitarConductorActivity.this, R.string.notificacionEnviada, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(SolicitarConductorActivity.this, R.string.notificacionNOEnviada, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(SolicitarConductorActivity.this, R.string.notificacionNOEnviada, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FCMRespuesta> call, Throwable t) {
+                        Log.d("Error","Error" + t.getMessage());
+
+                    }
+                });
+            }
+            else {
+                Toast.makeText(SolicitarConductorActivity.this, R.string.nosePudoenviarNotificacionConductorNotieneToken, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    });
+}
     private void enviarNotificacion(final String tiempo, final String km) {
         mTokenProveedor.obtenerToken(mIdDriverFound).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -204,6 +273,10 @@ public class SolicitarConductorActivity extends AppCompatActivity {
                                     "Destino: " + mExtraDestination
                     );
                     map.put("idCliente", mAuthProveedores.obetenerId());
+                    map.put("origin", mExtraOrigin);
+                    map.put("destination", mExtraDestination);
+                    map.put("min", tiempo);
+                    map.put("distance", km);
                     FCMCuerpo fcmCuerpo = new FCMCuerpo(token, "high","4500s",map);
                     mNotificacionProveedor.enviarNotificacion(fcmCuerpo).enqueue(new Callback<FCMRespuesta>() {
                         @Override
