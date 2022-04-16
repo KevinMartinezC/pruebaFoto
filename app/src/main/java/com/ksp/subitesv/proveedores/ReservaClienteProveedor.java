@@ -23,9 +23,21 @@ public class ReservaClienteProveedor {
         map.put("estado", estado);
         return  mBasedeDatos.child(idReservaCliente).updateChildren(map);
     }
+
+    public Task<Void> actualizarIdHistorialReserva(String idReservaCliente){
+        String idPush = mBasedeDatos.push().getKey();
+        Map<String, Object> map = new HashMap<>();
+        map.put("idHistorialReserva", idPush);
+        return  mBasedeDatos.child(idReservaCliente).updateChildren(map);
+    }
+
     public DatabaseReference obtenerStado(String idReservaCliente){
         return  mBasedeDatos.child(idReservaCliente).child("estado");
     }
 
+
+    public DatabaseReference obtenerReservaCliente(String idReservaCliente){
+        return  mBasedeDatos.child(idReservaCliente);
+    }
 
 }

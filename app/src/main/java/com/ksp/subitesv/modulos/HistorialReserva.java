@@ -1,6 +1,6 @@
 package com.ksp.subitesv.modulos;
 
-public class ReservaCliente {
+public class HistorialReserva {
 
     String idHistorialReserva;
     String idCliente;
@@ -14,12 +14,16 @@ public class ReservaCliente {
     double origenLng;
     double destinoLat;
     double destinoLng;
+    double CalificacionCliente;
+    double CalificacionConductor;
+    long timestamp;
 
-    public ReservaCliente(){
+    public HistorialReserva(){
 
     }
 
-    public ReservaCliente(String idCliente, String idConductor, String destino, String origen, String tiempo, String km, String estado, double origenLat, double origenLng, double destinoLat, double destinoLng) {
+    public HistorialReserva(String idHistorialReserva,String idCliente, String idConductor, String destino, String origen, String tiempo, String km, String estado, double origenLat, double origenLng, double destinoLat, double destinoLng) {
+        this.idHistorialReserva = idHistorialReserva;
         this.idCliente = idCliente;
         this.idConductor = idConductor;
         this.destino = destino;
@@ -33,6 +37,13 @@ public class ReservaCliente {
         this.destinoLng = destinoLng;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public String getIdHistorialReserva() {
         return idHistorialReserva;
@@ -40,6 +51,22 @@ public class ReservaCliente {
 
     public void setIdHistorialReserva(String idHistorialReserva) {
         this.idHistorialReserva = idHistorialReserva;
+    }
+
+    public double getCalificacionCliente() {
+        return CalificacionCliente;
+    }
+
+    public void setCalificacionCliente(double calificacionCliente) {
+        CalificacionCliente = calificacionCliente;
+    }
+
+    public double getCalificacionConductor() {
+        return CalificacionConductor;
+    }
+
+    public void setCalificacionConductor(double calificacionConductor) {
+        CalificacionConductor = calificacionConductor;
     }
 
     public String getIdCliente() {

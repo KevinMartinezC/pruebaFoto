@@ -6,12 +6,14 @@ public class FCMCuerpo {
 
     private String to;
     private String priority;
+    private String ttl;
    Map<String,String> data;
 
-    public FCMCuerpo(String to, String priority, Map<String, String> data) {
+    public FCMCuerpo(String to, String priority,String ttl, Map<String, String> data) {
         this.to = to;
         this.priority = priority;
         this.data = data;
+        this.ttl = ttl;
     }
 // Getter Methods
 
@@ -43,6 +45,12 @@ public class FCMCuerpo {
         this.priority = priority;
     }
 
+    public String getTtl() {
+        return ttl;
+    }
 
+    public void setTtl(String ttl) {
+        this.ttl = ttl;
+    }
 }
 

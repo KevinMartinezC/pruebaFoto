@@ -11,6 +11,9 @@
     <string name="noseEncontroConductor">NO SE ENCONTRO UN CONDUCTOR</string>
     <string name="nosePudoenviarNotificacionConductorNotieneToken">NO se pudo enviar la notificacion porque el conductor no tiene un token de inicio de sesion</string>
     <string name="viajeNoAceptado">El conductor no acepto el viaje</string>
-
+    <string name="IniciaeViaje">Iniciar Viaje</string>
+    <string name="TerminarViaje">Finalizar Viaje</string>
+    <string name="PosicionCliente">Estas Cerca a la posicion del cliente</string>
+    <string name="PosicionLejos">Debes estar mas cerca de la posicion del cliente</string>
 
 </resources>

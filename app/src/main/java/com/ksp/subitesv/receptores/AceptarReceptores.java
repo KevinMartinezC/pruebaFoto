@@ -33,6 +33,7 @@ public class AceptarReceptores extends BroadcastReceiver {
         Intent intent1 = new Intent(context, MapReservaConductorActivity.class);
         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent1.setAction(Intent.ACTION_RUN);
+        intent1.putExtra("clienteId", idCliente);
         context.startActivity(intent1);
     }
 }

@@ -31,6 +31,11 @@ public class ProveedorGeoFire {
         geoQuery.removeAllListeners();
         return geoQuery;
     }
+
+    public DatabaseReference obtenerUbicacionConductor(String conductorId){
+        return mDatabase.child(conductorId).child("l");
+    }
+
     public DatabaseReference isConductorTrabajando(String idConductor){
         return FirebaseDatabase.getInstance().getReference().child("conductores_trabajando").child(idConductor);
     }

@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SubiteSV">
         <activity
+            android:name=".actividades.cliente.CalificacionConductorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".actividades.conductor.CalificacionClienteActivity"
+            android:exported="false" />
+        <activity
             android:name=".actividades.conductor.MapReservaConductorActivity"
             android:exported="false" />
         <activity

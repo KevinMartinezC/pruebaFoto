@@ -204,7 +204,7 @@ public class SolicitarConductorActivity extends AppCompatActivity {
                                     "Destino: " + mExtraDestination
                     );
                     map.put("idCliente", mAuthProveedores.obetenerId());
-                    FCMCuerpo fcmCuerpo = new FCMCuerpo(token, "high",map);
+                    FCMCuerpo fcmCuerpo = new FCMCuerpo(token, "high","4500s",map);
                     mNotificacionProveedor.enviarNotificacion(fcmCuerpo).enqueue(new Callback<FCMRespuesta>() {
                         @Override
                         public void onResponse(Call<FCMRespuesta> call, Response<FCMRespuesta> response) {
