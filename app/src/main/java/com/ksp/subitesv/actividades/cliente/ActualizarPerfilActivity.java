@@ -96,12 +96,12 @@ public class ActualizarPerfilActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GALERIA_REQUEST && resultCode == RESULT_OK){
+        if (requestCode== GALERIA_REQUEST && resultCode == RESULT_OK) {
             try {
-                mImagenFile = FileUtil.from(this,data.getData());
+                mImagenFile = FileUtil.from(this, data.getData());
                 mImageViewPerfil.setImageBitmap(BitmapFactory.decodeFile(mImagenFile.getAbsolutePath()));
-            }catch (Exception e){
-                Log.d("ERROR","Mensaje: " + e.getMessage());
+            } catch(Exception e) {
+                Log.d("ERROR", "Mensaje: " +e.getMessage());
             }
         }
     }
@@ -126,45 +126,46 @@ public class ActualizarPerfilActivity extends AppCompatActivity {
 
     private void actulizarPerfil() {
         mNombre = mTextViewNombre.getText().toString();
-        if(mNombre.equals("") && mImagenFile != null){
+        if (!mNombre.equals("") && mImagenFile != null) {
             mProgressDialog.setMessage("Espere un momento...");
             mProgressDialog.setCanceledOnTouchOutside(false);
             mProgressDialog.show();
 
             guardarImagen();
-        }else{
+        }
+       else{
             Toast.makeText(this, "Ingresa la imagen y el nombre", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void guardarImagen() {
-        byte[] imagenByte = CompressorBitmapImage.getImage(this,mImagenFile.getPath(),500,500);
-        StorageReference storage = FirebaseStorage.getInstance().getReference().child("cliente_imagenes").child(mAuthProveedor.obetenerId() + ".jpg");
-        UploadTask uploadTask = storage.putBytes(imagenByte);
+        byte[] imageByte = CompressorBitmapImage.getImage(this, mImagenFile.getPath(), 500, 500);
+        final StorageReference storage = FirebaseStorage.getInstance().getReference().child("client_images").child(mAuthProveedor.obetenerId() + ".jpg");
+        UploadTask uploadTask = storage.putBytes(imageByte);
         uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     storage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            String imagen = uri.toString();
-
-                            Cliente cliente = new Cliente();
-                            cliente.setImagen(imagen);
-                            cliente.setNombre(mNombre);
-                            cliente.setId(mAuthProveedor.obetenerId());
-                            mProveedorCliente.actualizar(cliente).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            String image = uri.toString();
+                            Cliente client = new Cliente();
+                            client.setImagen(image);
+                            client.setNombre(mNombre);
+                            client.setId(mAuthProveedor.obetenerId());
+                            mProveedorCliente.actualizar(client).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onSuccess(Void unused) {
+                                public void onSuccess(Void aVoid) {
                                     mProgressDialog.dismiss();
-                                    Toast.makeText(ActualizarPerfilActivity.this, "Su informacion se actualizo correctamente.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ActualizarPerfilActivity.this, "Su informacion se actualizo correctamente", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                     });
-                }else{
-                    Toast.makeText(ActualizarPerfilActivity.this, "Hubo un error a subir la imagen", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(ActualizarPerfilActivity.this, "Hubo un error al subir la imagen", Toast.LENGTH_SHORT).show();
                 }
             }
         });

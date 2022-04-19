@@ -24,7 +24,7 @@ public class ProveedorCliente {
         Map<String, Object> map = new HashMap<>();
         map.put("nombre", cliente.getNombre());
         map.put("imagen",cliente.getImagen());
-        return  mBasedeDatos.child(cliente.getId()).setValue(map);
+        return  mBasedeDatos.child(cliente.getId()).updateChildren(map);
     }
 
     public DatabaseReference obtenerCLiente(String clienteId) {
